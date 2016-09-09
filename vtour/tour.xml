@@ -1,0 +1,387 @@
+<krpano version="1.19" title="Virtual Tour">
+
+	<include url="skin/vtourskin.xml" />
+
+
+	<!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
+	<skin_settings maps="false"
+	               maps_type="google"
+	               maps_bing_api_key=""
+	               maps_zoombuttons="false"
+	               gyro="true"
+	               webvr="true"
+	               littleplanetintro="true"
+	               title="false"
+	               thumbs="true"
+	               thumbs_width="120" thumbs_height="80" thumbs_padding="10" thumbs_crop="0|40|240|160"
+	               thumbs_opened="false"
+	               thumbs_text="false"
+	               thumbs_dragging="true"
+	               thumbs_onhoverscrolling="false"
+	               thumbs_scrollbuttons="false"
+	               thumbs_scrollindicator="false"
+	               thumbs_loop="false"
+	               tooltips_buttons="false"
+	               tooltips_thumbs="false"
+	               tooltips_hotspots="false"
+	               tooltips_mapspots="false"
+	               deeplinking="false"
+	               loadscene_flags="MERGE"
+	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
+	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
+	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
+	               loadingtext="loading..."
+	               layout_width="100%"
+	               layout_maxwidth="814"
+	               controlbar_width="-24"
+	               controlbar_height="40"
+	               controlbar_offset="2000"
+	               controlbar_offset_closed="-40"
+	               controlbar_overlap.no-fractionalscaling="10"
+	               controlbar_overlap.fractionalscaling="0"
+	               design_skin_images="vtourskin.png"
+	               design_bgcolor="0x2D3E50"
+	               design_bgalpha="0.8"
+	               design_bgborder="0"
+	               design_bgroundedge="1"
+	               design_bgshadow="0 4 10 0x000000 0.3"
+	               design_thumbborder_bgborder="3 0xFFFFFF 1.0"
+	               design_thumbborder_padding="2"
+	               design_thumbborder_bgroundedge="0"
+	               design_text_css="color:#FFFFFF; font-family:Arial;"
+	               design_text_shadow="1"
+	               />
+
+	<!--
+	    For an alternative skin design either change the <skin_settings> values 
+	    from above or optionally include one of the predefined designs from below.
+	-->
+	<!-- <include url="skin/vtourskin_design_flat_light.xml"  /> -->
+	<!-- <include url="skin/vtourskin_design_glass.xml"       /> -->
+	<!-- <include url="skin/vtourskin_design_ultra_light.xml" /> -->
+	<!-- <include url="skin/vtourskin_design_117.xml"         /> -->
+	<!-- <include url="skin/vtourskin_design_117round.xml"    /> -->
+	<!-- <include url="skin/vtourskin_design_black.xml"       /> -->
+
+
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+		
+		switch(plugin[skin_gyro].enabled);
+		
+		addlayer(taobao);
+		set(layer[taobao].url, '%SWFPATH%/plugins/textfield.swf');
+		set(layer[taobao].keep, true);
+		set(layer[taobao].align, 'bottom');
+		set(layer[taobao].y, 40);
+		set(layer[taobao].background, false);
+		set(layer[taobao].css, 'color:#FFFFFF;text-align:center;');
+		set(layer[taobao].html, '<a href="buy.php" style='color:#FFF; font-size:18px;'>VR眼镜购买链接</a>');
+	</action>
+	
+	<scene name="scene_warrior" title="warrior" onstart="" havevrimage="true" thumburl="panos/warrior.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-2.481" vlookat="3.928" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/warrior.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/warrior.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/warrior.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="179.032" atv="1.740" linkedscene="scene_deathknight" />
+		
+		<layer name="icon1" type="image" url="assets/zs.png" width="58" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+
+	
+	<scene name="scene_deathknight" title="deathknight" onstart="" havevrimage="true" thumburl="panos/deathknight.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-269.994" vlookat="1.509" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/deathknight.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/deathknight.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/deathknight.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="5.779" atv="-0.001" linkedscene="scene_demonhunter" />
+		
+		<layer name="icon1" type="image" url="assets/swqs.png" width="66" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_demonhunter" title="demonhunter" onstart="" havevrimage="true" thumburl="panos/demonhunter.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-4.548" vlookat="0.000" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/demonhunter.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/demonhunter.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/demonhunter.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="177.947" atv="5.058" linkedscene="scene_druid" />
+		
+		<layer name="icon1" type="image" url="assets/emls.png" width="66" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_druid" title="druid" onstart="" havevrimage="true" thumburl="panos/druid.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-4.962" vlookat="5.685" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/druid.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/druid.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/druid.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-163.800" atv="8.642" linkedscene="scene_hunter" />
+		
+		<layer name="icon1" type="image" url="assets/dly.png" width="66" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_hunter" title="hunter" onstart="" havevrimage="true" thumburl="panos/hunter.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="0.000" vlookat="0.000" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/hunter.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/hunter.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/hunter.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-176.556" atv="13.607" linkedscene="scene_mage" />
+		
+		<layer name="icon1" type="image" url="assets/lr.png" width="65" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_mage" title="mage" onstart="" havevrimage="true" thumburl="panos/mage.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="361.028" vlookat="17.710" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/mage.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/mage.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/mage.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="178.771" atv="3.054" linkedscene="scene_monk" />
+		
+		<layer name="icon1" type="image" url="assets/fs.png" width="69" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_monk" title="monk" onstart="" havevrimage="true" thumburl="panos/monk.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="2.894" vlookat="1.654" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/monk.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/monk.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/monk.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-177.132" atv="16.711" linkedscene="scene_paladin" />
+		
+		<layer name="icon1" type="image" url="assets/ws.png" width="69" height="66" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_paladin" title="paladin" onstart="" havevrimage="true" thumburl="panos/paladin.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-0.620" vlookat="0.103" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/paladin.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/paladin.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/paladin.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="179.964" atv="2.865" linkedscene="scene_priest" />
+		
+		<layer name="icon1" type="image" url="assets/sqs.png" width="64" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_priest" title="priest" onstart="" havevrimage="true" thumburl="panos/priest.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-359.262" vlookat="-3.366" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/priest.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/priest.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/priest.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="-177.104" atv="3.242" linkedscene="scene_rogue" />
+		
+		<layer name="icon1" type="image" url="assets/ms.png" width="69" height="58" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_rogue" title="rogue" onstart="" havevrimage="true" thumburl="panos/rogue.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="355.767" vlookat="23.607" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/rogue.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/rogue.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/rogue.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="178.435" atv="8.727" linkedscene="scene_shaman" />
+		
+		<layer name="icon1" type="image" url="assets/dz.png" width="68" height="66" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_shaman" title="shaman" onstart="" havevrimage="true" thumburl="panos/shaman.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-79.003" vlookat="27.527" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/shaman.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/shaman.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/shaman.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="142.790" atv="48.002" linkedscene="scene_warlock" />
+		
+		<layer name="icon1" type="image" url="assets/sm.png" width="68" height="66" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+
+	<scene name="scene_warlock" title="warlock" onstart="" havevrimage="true" thumburl="panos/warlock.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-8.993" vlookat="-13.541" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="panos/warlock.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="1024" tiledimageheight="1024">
+				<cube url="panos/warlock.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="panos/warlock.tiles/vr/pano_%s.jpg" />
+		</image>
+
+		<!-- place your scene hotspots here -->
+		<hotspot name="spot1" style="skin_hotspotstyle" ath="166.499" atv="10.998" linkedscene="scene_warrior" />
+		
+		<layer name="icon1" type="image" url="assets/ss.png" width="67" height="68" visible="true" enabled="true" x="5%" y="5%" />
+		
+		<layer name="vr" type="image" url="assets/vr.png" width="70" height="44" visible="true" enabled="true" x="75%" y="85%" onClick="webvr.enterVR();" />
+
+	</scene>
+	
+</krpano>
